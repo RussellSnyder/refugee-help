@@ -1,5 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Group, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'main_contact' do
+    user = FactoryBot.create(:user)
+    group = FactoryBot.create(:group, user:)
+
+    expect(group.main_contact).to eq(user)
+  end
 end
