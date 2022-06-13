@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_13_163041) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_13_174534) do
+  create_table "group_posts", force: :cascade do |t|
+    t.integer "group_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_posts_on_group_id"
+    t.index ["post_id"], name: "index_group_posts_on_post_id"
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.string "location"
@@ -21,15 +30,28 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_13_163041) do
     t.index ["user_id"], name: "index_groups_on_user_id"
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.integer "user_id", null: false
+    t.string "body"
+    t.string "status", default: "Open"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "password_digest"
-    t.string "role"
+    t.string "role", default: "User"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "phone_number"
   end
 
+  add_foreign_key "group_posts", "groups"
+  add_foreign_key "group_posts", "posts"
   add_foreign_key "groups", "users"
+  add_foreign_key "posts", "users"
 end
