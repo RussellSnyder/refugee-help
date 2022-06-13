@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_13_174534) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_13_190259) do
+  create_table "group_admins", force: :cascade do |t|
+    t.integer "group_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_admins_on_group_id"
+    t.index ["user_id"], name: "index_group_admins_on_user_id"
+  end
+
   create_table "group_posts", force: :cascade do |t|
     t.integer "group_id", null: false
     t.integer "post_id", null: false
@@ -50,6 +59,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_13_174534) do
     t.string "phone_number"
   end
 
+  add_foreign_key "group_admins", "groups"
+  add_foreign_key "group_admins", "users"
   add_foreign_key "group_posts", "groups"
   add_foreign_key "group_posts", "posts"
   add_foreign_key "groups", "users"

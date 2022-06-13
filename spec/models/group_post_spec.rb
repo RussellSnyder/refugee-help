@@ -1,5 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe GroupPost, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'deletes entries with associated posts when the post is deleted'
+  it 'deletes entries with associated groups when the group is deleted'
 end
